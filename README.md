@@ -1,4 +1,4 @@
-#Servlet/JSP release
+# Servlet/JSP release
 
 ## 2024-04-18
 - 톰켓 서버 연결
