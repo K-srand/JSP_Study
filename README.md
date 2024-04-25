@@ -13,3 +13,17 @@
 - GET/POST 동시 처리
 - 로그인, 구구단 예제 테스트
 - DB 연동 및 회원 가입 예제 테스트(회원 정보 등록, 조회, 삭제)
+
+## 2024-04-24
+- 서블릿 forward 테스트
+- 바인딩 테스트
+- ServletContext, ServletConfig 사용
+- load-on-startup
+- 쿠키/세션 테스트
+
+## 2024-04-25
+- 서블릿 속성 및 스코프
+- URL 패턴 테스트
+- Filter API
+- Listener API
+- JSP 테스트(선언문,스크립트릿,표현식,주석문)
