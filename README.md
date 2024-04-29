@@ -27,3 +27,13 @@
 - Filter API
 - Listener API
 - JSP 테스트(선언문,스크립트릿,표현식,주석문)
+
+## 2024-04-26
+- 인클루드 액션 태그
+- 포워드 액션 태그
+- useBean, setProperty, getProperty 액션 태그
+
+
+## 2024-04-29
+- 표현 언어 및 JSTL 테스트
+- 파일 업로드 및 다운로드 테스트
