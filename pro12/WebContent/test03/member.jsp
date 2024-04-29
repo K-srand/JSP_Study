@@ -22,8 +22,8 @@ h1 {
 	String _name = request.getParameter("name");
 	MemberVO memberVO = new MemberVO();
 	memberVO.setName(_name);
-	MemberDAO dao=new MemberDAO();
-	List membersList=dao.listMembers(memberVO);
+	MemberDAO dao=new MemberDAO();  /*DB 연결 후 회원 정보 조회를 위해서 MemberDAO 객체 생성*/
+	List membersList=dao.listMembers(memberVO); 
 %>
 	<table border='1' width='800' align='center'>
 		<tr align='center' bgcolor='#FFFF66'> 
