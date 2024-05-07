@@ -1,4 +1,4 @@
-package sec03.brd01;
+package sec03.brd03;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,12 +28,13 @@ public class BoardDAO {
 	}
 
 	public List selectAllArticles() {
+		
 		List articlesList = new ArrayList();
+		
 		try {
 			
 			conn = dataFactory.getConnection();
-			 
-			// 1. 요청받은 정보 추출
+			
 			String query = "SELECT LEVEL,articleNO,parentNO,title,content,id,writeDate" 
 			             + " from t_board"
 					     + " START WITH  parentNO=0" + " CONNECT BY PRIOR articleNO=parentNO"
@@ -42,7 +43,9 @@ public class BoardDAO {
 			
 			pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
+				
 				int level = rs.getInt("level");
 				int articleNO = rs.getInt("articleNO");
 				int parentNO = rs.getInt("parentNO");
@@ -50,6 +53,7 @@ public class BoardDAO {
 				String content = rs.getString("content");
 				String id = rs.getString("id");
 				Date writeDate = rs.getDate("writeDate");
+				
 				ArticleVO article = new ArticleVO();
 				article.setLevel(level);
 				article.setArticleNO(articleNO);
@@ -58,7 +62,9 @@ public class BoardDAO {
 				article.setContent(content);
 				article.setId(id);
 				article.setWriteDate(writeDate);
+				
 				articlesList.add(article);
+				
 			}
 			
 			rs.close();
@@ -70,4 +76,73 @@ public class BoardDAO {
 		}
 		return articlesList;
 	}
+	
+	private int getNewArticleNO() {
+		
+		int result = 0; 
+		
+		try {
+			
+			conn = dataFactory.getConnection();
+			
+			String query = "SELECT max(articleNO) from t_board";
+			System.out.println(query);
+			
+			pstmt = conn.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery(query);
+			
+			if (rs.next())
+				 result = rs.getInt(1) + 1;
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	public int insertNewArticle(ArticleVO article) {
+		
+		int articleNO = getNewArticleNO();
+		
+		try {
+			
+			conn = dataFactory.getConnection();
+			
+			int parentNO = article.getParentNO();
+			String title = article.getTitle();
+			String content = article.getContent();
+			String id = article.getId();
+			String imageFileName = article.getImageFileName();
+			
+			String query = "INSERT INTO t_board (articleNO, parentNO, title, content, imageFileName, id)"
+					+ " VALUES (?, ? ,?, ?, ?, ?)";
+			System.out.println(query);
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNO);
+			pstmt.setInt(2, parentNO);
+			pstmt.setString(3, title);
+			pstmt.setString(4, content);
+			pstmt.setString(5, imageFileName);
+			pstmt.setString(6, id);
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return articleNO;
+		
+	}
+	
+	
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class BoardController
  */
-@WebServlet("/board/*")
+//@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BoardService boardService;
@@ -46,27 +46,47 @@ public class BoardController extends HttpServlet {
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
-		String nextPage = "";
+		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		
+		String nextPage = ""; //null 가능
+		
 		String action = request.getPathInfo();
 		System.out.println("action:" + action);
+		
 		try {
 			List<ArticleVO> articlesList = new ArrayList<ArticleVO>();
-			if (action == null) {
+			if (action == null) {           //http://localhost:8090/pro17/board/
+				
+				// 2. 게시글 목록 DB 연동 처리
 				articlesList = boardService.listArticles();
 				request.setAttribute("articlesList", articlesList);
+				
 				nextPage = "/board01/listArticles.jsp";
+				
 			} else if (action.equals("/listArticles.do")) {
+				
+				// 2. 게시글 목록 DB 연동 처리
 				articlesList = boardService.listArticles();
 				request.setAttribute("articlesList", articlesList);
+				
 				nextPage = "/board01/listArticles.jsp";
-			}else {
+				
+			} else {
+				
+				//2. 게시글 목록 DB 연동 처리
+				articlesList = boardService.listArticles();
+				
+				request.setAttribute("articlesList", articlesList);
 				nextPage = "/board01/listArticles.jsp";
+				
 			}
 			
+			// 3. 화면 이동
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
