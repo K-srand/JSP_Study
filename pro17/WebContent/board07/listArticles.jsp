@@ -94,9 +94,6 @@
 	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; pre </a>
 	         			</c:if>
 	         				 <a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
-	         			<c:if test="${section == lastSection && page == 10 }">
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
-	         			</c:if>
 	      			</c:forEach>
         		</c:when>
         	</c:choose>

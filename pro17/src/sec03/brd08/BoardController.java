@@ -93,6 +93,8 @@ public class BoardController extends HttpServlet {
 				articlesMap.put("section", section);
 				articlesMap.put("pageNum", pageNum);
 				
+				//articlesMap.get("totArticles");
+				
 				request.setAttribute("articlesMap", articlesMap);
 				nextPage = "/board07/listArticles.jsp";
 					
