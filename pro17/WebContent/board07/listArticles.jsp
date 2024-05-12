@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    isELIgnored="false" %>
+    isELIgnored="false" 
+    %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
@@ -8,7 +9,8 @@
 <c:set  var="totArticles"  value="${articlesMap.totArticles}" />
 <c:set  var="section"  value="${articlesMap.section}" />
 <c:set  var="pageNum"  value="${articlesMap.pageNum}" />
-<c:set  var="lastSection" value="${totArticles/100+1}"/>
+<fmt:formatNumber var="lastSection" type="number" maxFractionDigits="0" value="${totArticles/100+1}" />
+<fmt:formatNumber var="lastPage" type="number" maxFractionDigits="0" value="${(totArticles - (section-1)*100)/10 + 1}" />
 
 <%
   request.setCharacterEncoding("UTF-8");
@@ -76,7 +78,7 @@
         <c:when test="${totArticles > 100 }">  <!-- 글 개수가 100 초과인경우 -->
         
         	<c:choose>
-        		<c:when test="${section < lastSection}" >  <!-- 마지막 섹션 전인 경우 -->
+        		<c:when test="${section < lastSection}" > <!-- 마지막 섹션 전인 경우 -->
         			<c:forEach var="page" begin="1" end="10" step="1" > 
         				<c:if test="${ section > 1 && page==1 }">
 	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; pre </a>
@@ -89,11 +91,14 @@
         		</c:when>
         	
         		<c:when test="${section == lastSection}" >   <!-- 마지막 섹션인 경우 -->
-        			<c:forEach   var="page" begin="1" end="${lastSection+1}" step="1" >
-	         			<c:if test="${section == lastSection && page==1 }">
+        			<c:forEach var="page" begin="1" end="${lastPage}" step="1" >
+        				<c:if test="${ section > 1 && page==1 }">
 	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; pre </a>
 	         			</c:if>
-	         				 <a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
+	         				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
+	      				<c:if test="${ page == lastPage }">
+	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section = 1}&pageNum=${page = 1}">&nbsp; 처음으로</a>
+	         			</c:if>
 	      			</c:forEach>
         		</c:when>
         	</c:choose>

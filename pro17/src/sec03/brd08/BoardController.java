@@ -110,6 +110,9 @@ public class BoardController extends HttpServlet {
 				pagingMap.put("section", section);
 				pagingMap.put("pageNum", pageNum);
 				
+				System.out.println("section : " + section);
+				System.out.println("pageNum : " + pageNum);
+				
 				//2. 게시글 목록 DB 연동 처리
 				Map articlesMap=boardService.listArticles(pagingMap);
 				articlesMap.put("section", section);
