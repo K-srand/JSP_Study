@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"
+  isELIgnored="false"
+  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +30,8 @@
      <ul>
        <c:choose>
        <c:when test="${empty sessionScope.loginUser}">
-       <li>         
-         <a href="NonageShop?command=login_form" style="width:110px;">LOGIN(CUSTOMER</a>   
+       <li>       
+    	 <a href="NonageShop?command=login_form" style="width:110px;"> LOGIN(CUSTOMER</a>
 	     <a href="NonageShop?command=admin_login_form" style="width:100px;">| ADMIN)</a>
 	   </li>		       
        <li>/</li>
