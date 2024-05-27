@@ -3,11 +3,11 @@
 <%@ include file="../header.jsp" %>  
 
 <%@ include file="sub_img.html"%> 
-<%@ include file="sub_menu.html" %>   
+<%@ include file="sub_menu.html" %>  
   
   <article>
     <h1>Login</h1>
-    <form method="post" action="NonageShop?command=login">
+    <form name="loginForm" method="post" action="NonageShop?command=login">
         <fieldset>
         <legend></legend>
           <label>User ID</label>
@@ -17,10 +17,11 @@
         </fieldset>
         <div class="clear"></div>
         <div id="buttons">
-            <input type="submit" value="로그인" class="submit">
+            <input type="button" value="로그인" class="submit" onclick="isEmpty()"> 
             <input type="button" value="회원가입" class="cancel"
                  onclick="location='NonageShop?command=join_form'"> 
         </div>
-    </form>  
+    </form> 
+    
   </article>
 <%@ include file="../footer.jsp" %>      
