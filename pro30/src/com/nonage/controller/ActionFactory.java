@@ -29,6 +29,8 @@ public class ActionFactory {
 			action = new ContractAction();
 		} else if(command.equals("join_form")) {
 			action = new JoinFormAction();
+		} else if(command.equals("join")) {
+			action = new JoinAction();
 		} else if(command.equals("logout")) {
 			action = new LogoutAction();
 		} else if(command.equals("cart_list")) {

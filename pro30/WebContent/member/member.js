@@ -31,3 +31,32 @@ function go_next() {
 		alert("약관에 동의하셔야만 합니다.");
 	}
 }
+
+
+function go_save() {
+	//alert("join");
+	
+	var formJoin = document.formJoin;
+	
+	if(formJoin.id.value == "") {           //1. 아이디 입력하지 않았을 경우
+		alert("아이디를 입력하여 주세요.");
+		formJoin.id.focus();
+	} else if(formJoin.pwd.value == "") {   //2. 비밀번호를 입력하지 않았을 경우
+		alert("비밀번호를 입력해 주세요.");
+		formJoin.pwd.focus();
+	} else if(formJoin.pwdCheck.value == "") {   //3. 비밀번호를 다시 한번 입력하지 않았을 경우
+		alert("비밀번호를 다시 한번 입력해주세요.");
+		formJoin.pwdCheck.focus();
+	} else if(formJoin.pwd.value != formJoin.pwdCheck.value) {   //4. 비밀번호가 일치하지 않았을 경우
+		alert("비밀번호가 일치하지 않습니다.");
+		formJoin.pwd.focus();
+	} else if(formJoin.name.value == "") {      //5. 이름을 입력하지 않았을 경우
+		alert("이름을 입력해 주세요.");
+		formJoin.name.focus();
+	} else if(formJoin.email.value == "") {   //6. 이메일을 입력하지 않았을 경우
+		alert("이메일을 입력해 주세요.");	
+		formJoin.email.focus();
+	} else {
+		formJoin.submit();
+	}
+}

@@ -65,6 +65,12 @@ public class MemberDAO {
 		return memberVO;
 		
 	}
+
+	public void insertMember(MemberVO memberVO) {
+		System.out.println("MemberDAO -> insertMember(memberVO) | id: " + memberVO.getId());
+	
+		
+	}
 	
 	
 	
