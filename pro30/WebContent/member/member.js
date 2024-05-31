@@ -60,3 +60,8 @@ function go_save() {
 		formJoin.submit();
 	}
 }
+
+function post_zip() {
+	var url = "NonageShop?command=find_zip_num";
+	window.open( url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=550, height=300, top=300, left=300");
+}

@@ -13,8 +13,10 @@ public class JoinAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		System.out.println("JoinAction -> execute()");
 		
+				
 		String url = "member/login.jsp";
 		
 		//memberVO 객체에 담기
@@ -24,7 +26,6 @@ public class JoinAction implements Action {
 		memberVO.setPwd(request.getParameter("pwd"));
 		memberVO.setName(request.getParameter("name"));
 		memberVO.setEmail(request.getParameter("email"));
-		
 		memberVO.setZipNum(request.getParameter("zipNum"));
 		memberVO.setAddress(request.getParameter("addr1")+request.getParameter("addr2"));
 		memberVO.setPhone(request.getParameter("phone"));
