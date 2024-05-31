@@ -68,11 +68,37 @@ public class MemberDAO {
 
 	public void insertMember(MemberVO memberVO) {
 		System.out.println("MemberDAO -> insertMember(memberVO) | id: " + memberVO.getId());
-	
+		System.out.println("MemberDAO -> insertMember(memberVO) | id: " + memberVO.getName());
+		
+		//DB 연결하기 위한 준비
+		Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    
+	    //쿼리문 작성
+		String sql = "insert into member(id, pwd, name, email, zip_num, address, phone) ";
+		sql +="values(?,?,?,?,?,?,?)";
+	    
+	    //DB 연동
+	    try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberVO.getId());
+			pstmt.setString(2, memberVO.getPwd());
+			pstmt.setString(3, memberVO.getName());
+			pstmt.setString(4, memberVO.getEmail());
+			pstmt.setString(5, memberVO.getZipNum());
+			pstmt.setString(6, memberVO.getAddress());
+			pstmt.setString(7, memberVO.getPhone());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
 		
 	}
-	
-	
 	
 
 }
