@@ -1,10 +1,14 @@
 package com.nonage.controller.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.nonage.dao.AddressDAO;
+import com.nonage.vo.AddressVO;
 
 public class FindZipNumAction implements Action{
 
@@ -17,7 +21,14 @@ public class FindZipNumAction implements Action{
 		
 		//동 확인
 		String dong = request.getParameter("dong");
-		System.out.println("dong: "+ dong);
+		
+		if(dong!=null && dong.trim().equals("") == false) {
+			System.out.println("dong: "+ dong);
+			
+			AddressDAO addressDAO = AddressDAO.getInstance();
+			ArrayList<AddressVO> addresslist = addressDAO.selectAdressByDong(dong.trim());
+			request.setAttribute("addressList", addresslist);
+		}
 		
 		request.getRequestDispatcher(url).forward(request, response);
 	}
