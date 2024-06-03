@@ -5,65 +5,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.nonage.vo.AddressVO;
-
 import util.DBManager;
 
+import com.nonage.vo.AddressVO;
+
 public class AddressDAO {
-	
+
 	private AddressDAO() {
 		
 	}
 	
-	private static AddressDAO instance = new AddressDAO();
+	private static AddressDAO instance =  new AddressDAO();
 	
 	public static AddressDAO getInstance() {
 		return instance;
 	}
 	
+	//역삼1동 =64개 
 	public ArrayList<AddressVO> selectAdressByDong(String dong){
 		
 		ArrayList<AddressVO> list = new ArrayList<AddressVO>();
+		//쿼리문을 작성해주세요.
+		
+		String sql = "select * from address where dong like '%'||?||'%'";
+		
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	    	conn = DBManager.getConnection();
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setString(1, dong);
+	    	rs = pstmt.executeQuery();
+	    	
+	    	while(rs.next()) {
+	    		AddressVO addressVO = new AddressVO();
+	    		addressVO.setZipNum(rs.getString("zip_num"));
+	    		addressVO.setSido(rs.getString("sido"));
+	    		addressVO.setGugun(rs.getString("gugun"));
+	    		addressVO.setDong(rs.getString("dong"));
+	    		addressVO.setZipCode(rs.getString("zip_code"));
+	    		addressVO.setBunji(rs.getString("bunji"));
+	    		
+	    		list.add(addressVO);
+	    	}
+	    	
+	    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return list;
-			
+		
+	}
 	
-//		System.out.println("AddressVO -> getAddress(dong) | dong: " + dong);
-//		
-//		//DB 연결하기 위한 준비
-//		Connection conn = null;
-//	    PreparedStatement pstmt = null;
-//	    ResultSet rs = null;
-//	    
-//	    //쿼리문 작성
-//	    String sql = "select * from member where dong=?";
-//	    
-//	    //DB 연동
-//	    try {
-//			conn = DBManager.getConnection();
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, dong);
-//			rs = pstmt.executeQuery();
-//			
-//			if(rs.next()) {
-//				addressVO = new AddressVO();
-//				addressVO.setZipNum(rs.getString("zipNum"));
-//				addressVO.setPwd(rs.getString("sido"));
-//				addressVO.setName(rs.getString("gugun"));
-//				addressVO.setEmail(rs.getString("dong"));
-//				addressVO.setZipNum(rs.getString("zipCode"));
-//				addressVO.setAddress(rs.getString("bunji"));
-//		
-//			}
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		} finally {
-//			DBManager.close(conn, pstmt, rs);
-//		}
-//		
-//		return addressVO;
-	} 
-
+	
+	
+	
 }

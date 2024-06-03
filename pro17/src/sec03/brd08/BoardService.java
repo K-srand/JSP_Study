@@ -20,10 +20,10 @@ public class BoardService {
 	public int addArticle(ArticleVO article){
 		return boardDAO.insertNewArticle(article);		
 	}
+	
 	public ArticleVO viewArticle(int articleNO) {
 		ArticleVO article = null;
 		article = boardDAO.selectArticle(articleNO);
-		//조회수를 하나 증가시켜주는 SQL 문을 작성해야 합니다.
 		return article;
 	}
 	
@@ -42,15 +42,19 @@ public class BoardService {
 	}
 	
 	public Map listArticles(Map<String, Integer> pagingMap) {
+		
 		Map articlesMap = new HashMap();
+		
 		List<ArticleVO> articlesList = boardDAO.selectAllArticles(pagingMap);
 		int totArticles = boardDAO.selectTotArticles();
 		
 		articlesMap.put("articlesList", articlesList);
-//		articlesMap.put("totArticles", totArticles);
-		articlesMap.put("totArticles", 121);
+		//articlesMap.put("totArticles", totArticles);
+		articlesMap.put("totArticles", 231);
 		
 		return articlesMap;
+		
 	}
+	
 	
 }

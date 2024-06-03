@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    isELIgnored="false" 
-    %>
+    isELIgnored="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <c:set  var="articlesList"  value="${articlesMap.articlesList}" />
 <c:set  var="totArticles"  value="${articlesMap.totArticles}" />
 <c:set  var="section"  value="${articlesMap.section}" />
 <c:set  var="pageNum"  value="${articlesMap.pageNum}" />
-<fmt:formatNumber var="lastSection" type="number" maxFractionDigits="0" value="${totArticles/100+1}" />
-<fmt:formatNumber var="lastPage" type="number" maxFractionDigits="0" value="${(totArticles - (section-1)*100)/10 + 1}" />
+
+<c:set var="totalPage" value="${Math.ceil((totArticles*1.0)/10)}"/> 
+<c:set var="endPage" value="${Math.ceil(pageNum/10.0)*10}"/>
+<c:set var="startPage" value="${endPage-(10-1)}"/>
+<c:set var="hasNext" value="${totalPage > endPage}"/>
 
 <%
   request.setCharacterEncoding("UTF-8");
@@ -72,60 +75,24 @@
     </c:choose>
 </table>
 
-<div class="cls2">
-	<c:if test="${totArticles != null }" >
-      <c:choose> 
-        <c:when test="${totArticles > 100 }">  <!-- 글 개수가 100 초과인경우 -->
-        
-        	<c:choose>
-        		<c:when test="${section < lastSection}" > <!-- 마지막 섹션 전인 경우 -->
-        			<c:forEach var="page" begin="1" end="10" step="1" > 
-        				<c:if test="${ section > 1 && page==1 }">
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; pre </a>
-	         			</c:if>
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
-	         			<c:if test="${ page == 10 }">
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
-	         			</c:if>
-        			</c:forEach>
-        		</c:when>
-        	
-        		<c:when test="${section == lastSection}" >   <!-- 마지막 섹션인 경우 -->
-        			<c:forEach var="page" begin="1" end="${lastPage}" step="1" >
-        				<c:if test="${ section > 1 && page==1 }">
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; pre </a>
-	         			</c:if>
-	         				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
-	      				<c:if test="${ page == lastPage }">
-	          				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section = 1}&pageNum=${page = 1}">&nbsp; 처음으로</a>
-	         			</c:if>
-	      			</c:forEach>
-        		</c:when>
-        	</c:choose>
-        </c:when>
-        
-        
-	    <c:when test="${totArticles ==100 }" >  <!--등록된 글 개수가 100개인경우  -->
-	      <c:forEach   var="page" begin="1" end="10" step="1" >
-	        <a class="no-uline"  href="#">${page } </a>
-	      </c:forEach>
-        </c:when>
-        
-        <c:when test="${totArticles< 100 }" >   <!--등록된 글 개수가 100개 미만인 경우  -->
-	      <c:forEach   var="page" begin="1" end="${totArticles/10 +1}" step="1" >
-	         <c:choose>
-	           <c:when test="${page==pageNum }">
-	            <a class="sel-page"  href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page } </a>
-	          </c:when>
-	          <c:otherwise>
-	            <a class="no-uline"  href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page } </a>
-	          </c:otherwise>
-	        </c:choose>
-	      </c:forEach>
-        </c:when>
-      </c:choose>
+ <div class="cls2">
+	<c:if test="${endPage > totalPage }"> 
+		<c:set var="endPage" value="${totalPage }"/> 
 	</c:if>
-</div>    
+	
+	<c:if test="${totArticles != null }">
+		<c:forEach var="page" begin="${ startPage }" end="${ endPage > totalPage ? totalPage : endPage }" step="1">
+			<c:if test="${section > 1 && page == startPage}">
+				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${Math.round(startPage) - 1}">&nbsp; pre </a> 
+			</c:if>
+			<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page} </a>
+			<c:if test="${endPage == page && hasNext}"> 
+				<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section+1}&pageNum=${Math.round(endPage + 1)}">&nbsp; next</a>
+			</c:if>
+		</c:forEach>
+	</c:if>
+</div>
+ 
 <br><br>
 <a  class="cls1"  href="${contextPath}/board/articleForm.do"><p class="cls2">글쓰기</p></a>
 </body>
