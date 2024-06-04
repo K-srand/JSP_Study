@@ -65,3 +65,16 @@ function post_zip() {
 	var url = "NonageShop?command=find_zip_num";
 	window.open( url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=550, height=300, top=300, left=300");
 }
+
+function idcheck() {
+
+	if(document.formJoin.id.value == "") {
+		alert("아이디를 입력하여 주십시오.");
+		document.formJoin.id.focus();
+		return;
+	}
+	
+	//팝업 띄울 예정
+	var url = "NonageShop?command=id_check_form&id=" + document.formJoin.id.value;
+	window.open( url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=550, height=300, top=300, left=300");
+}
