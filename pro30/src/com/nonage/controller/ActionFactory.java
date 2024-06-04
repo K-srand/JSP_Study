@@ -31,6 +31,8 @@ public class ActionFactory {
 			action = new JoinFormAction();
 		} else if(command.equals("join")) {
 			action = new JoinAction();
+		} else if(command.equals("id_check_form")) {
+			action = new IdCheckFormAction();
 		} else if(command.equals("find_zip_num")) {
 			action = new FindZipNumAction();
 		} else if(command.equals("logout")) {
