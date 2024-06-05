@@ -100,5 +100,34 @@ public class MemberDAO {
 		
 	}
 	
-
+	public int confirmID(String id) {
+		System.out.println("MemberDAO -> confirmID(id) | id: " + id);
+		
+		int result = -1; //-1:사용 가능, 1:사용 불가능
+		
+		//DB 연결하기 위한 준비
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		//쿼리문 작성
+		String sql = "select * from member where id=?";
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = 1;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return result;
+	}
 }
